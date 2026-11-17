@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Bella Napoli Pizzeria & Restaurant - Authentic Italian pizza, pasta, sandwiches, desserts and fresh drinks."
+  >
+
+  <meta name="theme-color" content="#171717">
+
+  <title>Bella Napoli | Pizzeria & Restaurant</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =====================================
+       1. WELCOME PAGE
+  ====================================== -->
+
+  <section class="welcome-page" id="welcomePage">
+
+    <div class="welcome-overlay"></div>
+
+    <div class="welcome-content">
+
+      <div class="welcome-logo">
+        <i class="fa-solid fa-pizza-slice"></i>
+        <span>BELLA NAPOLI</span>
+      </div>
+
+      <p class="welcome-subtitle">
+        AUTHENTIC ITALIAN PIZZERIA
+      </p>
+
+      <h1>
+        Taste the True<br>
+        Italian Experience
+      </h1>
+
+      <p class="welcome-description">
+        Fresh ingredients, authentic flavors and unforgettable moments.
+      </p>
+
+      <button class="order-now-btn" id="orderNowBtn" type="button">
+        ORDER NOW
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+    </div>
+
+    <div class="welcome-footer">
+      <p>Freshly Made. Traditionally Italian.</p>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       2. ORDER TYPE PAGE
+  ====================================== -->
+
+  <section class="order-type-page hidden" id="orderTypePage">
+
+    <div class="order-type-container">
+
+      <div class="order-type-logo">
+        <i class="fa-solid fa-pizza-slice"></i>
+        <span>BELLA NAPOLI</span>
+      </div>
+
+      <p class="section-label">WELCOME TO BELLA NAPOLI</p>
+
+      <h1 data-en="How would you like to enjoy your meal?"
+          data-so="Sidee ayaad rabtaa inaad cuntadaada u qaadato?">
+        How would you like to enjoy your meal?
+      </h1>
+
+      <p class="order-type-description">
+        Choose your preferred dining experience.
+      </p>
+
+      <div class="order-type-options">
+
+        <!-- DINE IN -->
+        <button
+          class="order-type-card"
+          id="dineInBtn"
+          type="button"
+          data-order-type="dine-in"
+        >
+
+          <div class="order-type-icon">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+
+          <h2>DINE IN</h2>
+
+          <p>
+            Enjoy your meal at our restaurant.
+          </p>
+
+          <span>Ku cun maqaayadda</span>
+
+          <i class="fa-solid fa-arrow-right card-arrow"></i>
+
+        </button>
+
+
+        <!-- TAKEAWAY -->
+        <button
+          class="order-type-card"
+          id="takeawayBtn"
+          type="button"
+          data-order-type="takeaway"
+        >
+
+          <div class="order-type-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </div>
+
+          <h2>TAKEAWAY</h2>
+
+          <p>
+            Order your food and take it away.
+          </p>
+
+          <span>Dalbo cuntadaada oo qaado</span>
+
+          <i class="fa-solid fa-arrow-right card-arrow"></i>
+
+        </button>
+
+      </div>
+
+      <button class="back-welcome-btn" id="backWelcomeBtn" type="button">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       3. MAIN RESTAURANT WEBSITE
+  ====================================== -->
+
+  <main class="experience-page hidden" id="experiencePage">
+
+    <!-- HEADER -->
+    <header class="main-header" id="mainHeader">
+
+      <div class="header-container">
+
+        <a href="#menuHome" class="brand-logo">
+          <i class="fa-solid fa-pizza-slice"></i>
+
+          <span>
+            BELLA <strong>NAPOLI</strong>
+          </span>
+        </a>
+
+        <nav class="main-navigation" id="mainNavigation">
+
+          <a href="#menuHome" class="nav-link active">
+            Home
+          </a>
+
+          <a href="#menuSection" class="nav-link">
+            Menu
+          </a>
+
+          <a href="#aboutSection" class="nav-link">
+            About
+          </a>
+
+          <a href="#contactSection" class="nav-link">
+            Contact
+          </a>
+
+        </nav>
+
+        <div class="header-actions">
+
+          <!-- LANGUAGE -->
+          <div class="language-switcher">
+
+            <button
+              type="button"
+              class="language-btn"
+              id="languageBtn"
+              aria-expanded="false"
+              aria-controls="languageOptions"
+            >
+              <i class="fa-solid fa-globe"></i>
+              <span id="currentLanguage">EN</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+
+            <div class="language-options hidden" id="languageOptions">
+
+              <button type="button" data-lang="en">
+                English
+              </button>
+
+              <button type="button" data-lang="so">
+                Somali
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- CART -->
+          <button
+            class="cart-button"
+            id="cartButton"
+            type="button"
+            aria-label="Open shopping cart"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+
+          <!-- MOBILE MENU -->
+          <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false"
+            aria-controls="mainNavigation"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero-section" id="menuHome">
+
+      <div class="hero-content">
+
+        <span class="hero-tag">
+          <i class="fa-solid fa-star"></i>
+          AUTHENTIC ITALIAN FOOD
+        </span>
+
+        <h1>
+          A Little Taste<br>
+          Of <span>Italy</span>
+        </h1>
+
+        <p>
+          Discover delicious Italian pizza, fresh pasta,
+          sandwiches and more. Made fresh with love.
+        </p>
+
+        <a href="#menuSection" class="hero-button">
+          EXPLORE MENU
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- ORDER TYPE INFORMATION -->
+    <section class="order-info-section">
+
+      <div class="order-info-container">
+
+        <div class="order-info-item">
+          <i class="fa-solid fa-utensils"></i>
+
+          <div>
+            <h3>Dine In</h3>
+            <p>Ku cun maqaayadda</p>
+          </div>
+        </div>
+
+        <div class="order-info-item">
+          <i class="fa-solid fa-bag-shopping"></i>
+
+          <div>
+            <h3>Takeaway</h3>
+            <p>Qaado cuntadaada</p>
+          </div>
+        </div>
+
+        <div class="order-info-item">
+          <i class="fa-solid fa-clock"></i>
+
+          <div>
+            <h3>Fresh & Fast</h3>
+            <p>Fresh food, quick service</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         4. MENU SECTION
+    ====================================== -->
+
+    <section class="menu-section" id="menuSection">
+
+      <div class="section-heading">
+
+        <span class="section-label">DISCOVER OUR MENU</span>
+
+        <h2>Our Delicious Menu</h2>
+
+        <p>
+          Explore our selection of freshly prepared Italian favorites.
+        </p>
+
+      </div>
+
+
+      <!-- SEARCH -->
+      <div class="menu-search-container">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          type="search"
+          id="menuSearch"
+          placeholder="Search your favorite food..."
+          autocomplete="off"
+        >
+
+      </div>
+
+
+      <!-- CATEGORIES -->
+      <div class="menu-categories" id="menuCategories">
+
+        <button class="category-btn active" data-category="all" type="button">
+          All
+        </button>
+
+        <button class="category-btn" data-category="pizza" type="button">
+          Pizza
+        </button>
+
+        <button class="category-btn" data-category="pasta" type="button">
+          Pasta
+        </button>
+
+        <button class="category-btn" data-category="sandwich" type="button">
+          Sandwiches
+        </button>
+
+        <button class="category-btn" data-category="dessert" type="button">
+          Desserts
+        </button>
+
+        <button class="category-btn" data-category="drinks" type="button">
+          Drinks
+        </button>
+
+      </div>
+
+
+      <!-- PRODUCTS -->
+      <div class="products-grid" id="productsGrid">
+
+        <!-- JavaScript ayaa halkan ku soo bandhigaya products -->
+
+      </div>
+
+      <p class="no-products hidden" id="noProducts">
+        No food items found.
+      </p>
+
+    </section>
+
+
+    <!-- =====================================
+         5. ABOUT SECTION
+    ====================================== -->
+
+    <section class="about-section" id="aboutSection">
+
+      <div class="about-content">
+
+        <span class="section-label">OUR STORY</span>
+
+        <h2>
+          Made With Love,<br>
+          Served With Passion.
+        </h2>
+
+        <p>
+          At Bella Napoli, we believe great food brings people together.
+          We prepare delicious meals using fresh ingredients and
+          traditional Italian inspiration.
+        </p>
+
+        <a href="#menuSection" class="about-button">
+          EXPLORE OUR MENU
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         6. FOOTER
+    ====================================== -->
+
+    <footer class="main-footer" id="contactSection">
+
+      <div class="footer-container">
+
+        <div class="footer-brand">
+
+          <h2>
+            <i class="fa-solid fa-pizza-slice"></i>
+            BELLA NAPOLI
+          </h2>
+
+          <p>
+            Authentic Italian flavors, made fresh every day.
+          </p>
+
+        </div>
+
+        <div class="footer-links">
+
+          <h3>Quick Links</h3>
+
+          <a href="#menuHome">Home</a>
+          <a href="#menuSection">Menu</a>
+          <a href="#aboutSection">About Us</a>
+
+        </div>
+
+        <div class="footer-contact">
+
+          <h3>Contact Us</h3>
+
+          <p>
+            <i class="fa-solid fa-phone"></i>
+            Contact information
+          </p>
+
+          <p>
+            <i class="fa-solid fa-envelope"></i>
+            Email information
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; <span id="currentYear"></span>
+          Bella Napoli. All Rights Reserved.
+        </p>
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <!-- =====================================
+       7. SHOPPING CART
+  ====================================== -->
+
+  <div class="cart-overlay hidden" id="cartOverlay"></div>
+
+  <aside class="cart-drawer hidden" id="cartDrawer">
+
+    <div class="cart-header">
+
+      <h2>
+        <i class="fa-solid fa-cart-shopping"></i>
+        Your Cart
+      </h2>
+
+      <button type="button" id="closeCartBtn" aria-label="Close cart">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+    </div>
+
+    <div class="cart-items" id="cartItems">
+
+      <div class="empty-cart" id="emptyCart">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h3>Your cart is empty</h3>
+        <p>Add something delicious!</p>
+      </div>
+
+    </div>
+
+    <div class="cart-footer">
+
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">$0.00</strong>
+      </div>
+
+      <button type="button" class="checkout-btn" id="checkoutBtn">
+        PROCEED TO CHECKOUT
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================
+       8. CHECKOUT PAGE
+  ====================================== -->
+
+  <section class="checkout-page hidden" id="checkoutPage">
+
+    <div class="checkout-container">
+
+      <button class="back-menu-btn" id="backToMenuBtn" type="button">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Menu
+      </button>
+
+      <div class="checkout-heading">
+
+        <span class="section-label">COMPLETE YOUR ORDER</span>
+
+        <h1>Checkout</h1>
+
+        <p>Please enter your details below.</p>
+
+      </div>
+
+
+      <form id="checkoutForm">
+
+        <div class="checkout-grid">
+
+          <!-- CUSTOMER DETAILS -->
+          <div class="checkout-form-section">
+
+            <h2>Customer Information</h2>
+
+            <div class="form-group">
+
+              <label for="customerName">Full Name</label>
+
+              <input
+                type="text"
+                id="customerName"
+                name="customerName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+              >
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="customerPhone">Phone Number</label>
+
+              <input
+                type="tel"
+                id="customerPhone"
+                name="customerPhone"
+                placeholder="Enter your phone number"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="customerEmail">Email Address</label>
+
+              <input
+                type="email"
+                id="customerEmail"
+                name="customerEmail"
+                placeholder="Enter your email"
+                autocomplete="email"
+              >
+
+            </div>
+
+
+            <!-- DINE IN FIELDS -->
+            <div class="conditional-fields hidden" id="dineInFields">
+
+              <h3>Dining Information</h3>
+
+              <div class="form-group">
+
+                <label for="tableNumber">Table Number</label>
+
+                <input
+                  type="text"
+                  id="tableNumber"
+                  name="tableNumber"
+                  placeholder="Enter table number"
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- TAKEAWAY FIELDS -->
+            <div class="conditional-fields hidden" id="takeawayFields">
+
+              <h3>Pickup Information</h3>
+
+              <div class="form-group">
+
+                <label for="pickupTime">Pickup Time</label>
+
+                <select id="pickupTime" name="pickupTime">
+
+                  <option value="">Select pickup time</option>
+                  <option value="As soon as possible">As soon as possible</option>
+                  <option value="15 minutes">15 minutes</option>
+                  <option value="30 minutes">30 minutes</option>
+                  <option value="45 minutes">45 minutes</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="orderNotes">Order Notes</label>
+
+              <textarea
+                id="orderNotes"
+                name="orderNotes"
+                rows="4"
+                placeholder="Any special instructions?"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- ORDER SUMMARY -->
+          <div class="checkout-summary">
+
+            <h2>Order Summary</h2>
+
+            <div id="checkoutItems"></div>
+
+            <div class="summary-total">
+              <span>Total</span>
+              <strong id="checkoutTotal">$0.00</strong>
+            </div>
+
+            <button
+              type="submit"
+              class="place-order-btn"
+              id="placeOrderBtn"
+            >
+              PLACE ORDER
+              <i class="fa-solid fa-check"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       9. ORDER CONFIRMATION
+  ====================================== -->
+
+  <section class="confirmation-page hidden" id="confirmationPage">
+
+    <div class="confirmation-container">
+
+      <div class="confirmation-icon">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <span class="section-label">ORDER SUCCESSFUL</span>
+
+      <h1>Thank You!</h1>
+
+      <p>
+        Your order has been received successfully.
+      </p>
+
+      <div class="confirmation-details">
+
+        <p>Order Number</p>
+
+        <h2 id="orderNumber">#BN000000</h2>
+
+      </div>
+
+      <button type="button" id="trackOrderBtn" class="track-order-btn">
+        TRACK YOUR ORDER
+      </button>
+
+      <button type="button" id="continueShoppingBtn" class="continue-shopping-btn">
+        CONTINUE SHOPPING
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       10. TRACK ORDER PAGE
+  ====================================== -->
+
+  <section class="track-page hidden" id="trackPage">
+
+    <div class="track-container">
+
+      <button type="button" id="backFromTrackBtn" class="back-menu-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+      </button>
+
+      <div class="track-heading">
+
+        <span class="section-label">ORDER TRACKING</span>
+
+        <h1>Track Your Order</h1>
+
+        <p>Enter your order number to check your order status.</p>
+
+      </div>
+
+      <form id="trackForm">
+
+        <div class="track-input-group">
+
+          <input
+            type="text"
+            id="trackOrderInput"
+            placeholder="Enter order number"
+            required
+          >
+
+          <button type="submit">
+            TRACK
+          </button>
+
+        </div>
+
+      </form>
+
+      <div class="track-result hidden" id="trackResult">
+
+        <h2>Order Status</h2>
+
+        <p id="trackStatus">Order received</p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       11. TOAST NOTIFICATION
+  ====================================== -->
+
+  <div class="toast hidden" id="toast">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastMessage">
+      Success!
+    </span>
+
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>
