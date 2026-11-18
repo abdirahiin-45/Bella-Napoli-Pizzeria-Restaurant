@@ -3,26 +3,31 @@
 
 /* =========================================
    BELLA NAPOLI - COMPLETE JAVASCRIPT
+   English | Somali | Arabic
+   Navigation | Cart | Checkout | WhatsApp
+   Tracking | Global Back Button
 ========================================= */
 
-
-/* =========================================
-   1. SELECT HTML ELEMENTS
-========================================= */
+/* 1. SELECT ELEMENTS */
 
 const $ = (selector) => document.querySelector(selector);
 
 const welcomePage = $("#welcomePage");
 const orderTypePage = $("#orderTypePage");
 const experiencePage = $("#experiencePage");
+const checkoutPage = $("#checkoutPage");
+const confirmationPage = $("#confirmationPage");
+const trackPage = $("#trackPage");
+
+const globalBackBtn = $("#globalBackBtn");
 
 const orderNowBtn = $("#orderNowBtn");
 const dineInBtn = $("#dineInBtn");
 const takeawayBtn = $("#takeawayBtn");
 const backWelcomeBtn = $("#backWelcomeBtn");
 
-const menuSearch = $("#menuSearch");
 const productsGrid = $("#productsGrid");
+const menuSearch = $("#menuSearch");
 const menuCategories = $("#menuCategories");
 const noProducts = $("#noProducts");
 
@@ -35,7 +40,6 @@ const cartCount = $("#cartCount");
 const cartTotal = $("#cartTotal");
 const checkoutBtn = $("#checkoutBtn");
 
-const checkoutPage = $("#checkoutPage");
 const checkoutForm = $("#checkoutForm");
 const checkoutItems = $("#checkoutItems");
 const checkoutTotal = $("#checkoutTotal");
@@ -46,17 +50,14 @@ const takeawayFields = $("#takeawayFields");
 const tableNumber = $("#tableNumber");
 const pickupTime = $("#pickupTime");
 
-const confirmationPage = $("#confirmationPage");
-const orderNumber = $("#orderNumber");
+const confirmationOrderNumber = $("#orderNumber");
 const trackOrderBtn = $("#trackOrderBtn");
 const continueShoppingBtn = $("#continueShoppingBtn");
 
-const trackPage = $("#trackPage");
 const trackForm = $("#trackForm");
 const trackOrderInput = $("#trackOrderInput");
 const trackResult = $("#trackResult");
 const trackStatus = $("#trackStatus");
-const backFromTrackBtn = $("#backFromTrackBtn");
 
 const toast = $("#toast");
 const toastMessage = $("#toastMessage");
@@ -68,36 +69,32 @@ const currentLanguage = $("#currentLanguage");
 const mobileMenuBtn = $("#mobileMenuBtn");
 const mainNavigation = $("#mainNavigation");
 
+const currentYear = $("#currentYear");
 
-/* =========================================
-   2. APPLICATION DATA
-========================================= */
+/* 2. APPLICATION SETTINGS */
+
+const RESTAURANT_WHATSAPP = "252617454321";
+
+const STORAGE_ORDERS = "bellaNapoliOrders";
+const STORAGE_LAST_ORDER = "bellaNapoliLastOrder";
 
 let cart = [];
-
 let selectedOrderType = "";
-
 let currentCategory = "all";
-
 let currentLanguageCode = "en";
-
 let lastOrder = null;
+let toastTimer = null;
 
-let toastTimer;
+let pageHistory = ["welcomePage"];
+let currentPage = "welcomePage";
 
-
-/* =========================================
-   3. FOOD MENU DATA
-========================================= */
+/* 3. FOOD PRODUCTS */
 
 const products = [
-
-  // PIZZA
-
   {
     id: 1,
     name: "Margherita Pizza",
-    somaliName: "Baastada Margherita",
+    somaliName: "Pizza Margherita",
     category: "pizza",
     price: 12.99,
     image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80",
@@ -105,7 +102,6 @@ const products = [
     somaliDescription: "Yaanyo, farmaajo mozzarella iyo basil cusub.",
     badge: "Popular"
   },
-
   {
     id: 2,
     name: "Pepperoni Pizza",
@@ -117,7 +113,6 @@ const products = [
     somaliDescription: "Pepperoni iyo farmaajo mozzarella.",
     badge: "Best Seller"
   },
-
   {
     id: 3,
     name: "BBQ Chicken Pizza",
@@ -129,7 +124,6 @@ const products = [
     somaliDescription: "Digaag duban, suugo BBQ iyo farmaajo.",
     badge: ""
   },
-
   {
     id: 4,
     name: "Four Cheese Pizza",
@@ -141,10 +135,6 @@ const products = [
     somaliDescription: "Afar nooc oo farmaajo Talyaani ah.",
     badge: "Special"
   },
-
-
-  // PASTA
-
   {
     id: 5,
     name: "Spaghetti Bolognese",
@@ -156,7 +146,6 @@ const products = [
     somaliDescription: "Spaghetti leh suugo hilib iyo yaanyo.",
     badge: "Popular"
   },
-
   {
     id: 6,
     name: "Creamy Alfredo Pasta",
@@ -168,7 +157,6 @@ const products = [
     somaliDescription: "Suugo kareem ah iyo farmaajo parmesan.",
     badge: ""
   },
-
   {
     id: 7,
     name: "Chicken Penne",
@@ -180,10 +168,6 @@ const products = [
     somaliDescription: "Baasto Penne iyo digaag duban.",
     badge: ""
   },
-
-
-  // SANDWICHES
-
   {
     id: 8,
     name: "Chicken Sandwich",
@@ -195,7 +179,6 @@ const products = [
     somaliDescription: "Rooti cusub, digaag iyo khudaar.",
     badge: ""
   },
-
   {
     id: 9,
     name: "Club Sandwich",
@@ -204,13 +187,9 @@ const products = [
     price: 10.99,
     image: "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=700&q=80",
     description: "Triple-layer sandwich with fresh ingredients.",
-    somaliDescription: "Sandwich saddex lakab leh iyo waxyaabo cusub.",
+    somaliDescription: "Sandwich saddex lakab leh.",
     badge: "Popular"
   },
-
-
-  // DESSERTS
-
   {
     id: 10,
     name: "Chocolate Cake",
@@ -222,7 +201,6 @@ const products = [
     somaliDescription: "Keeg shukulaato leh kareem macaan.",
     badge: ""
   },
-
   {
     id: 11,
     name: "Tiramisu",
@@ -234,10 +212,6 @@ const products = [
     somaliDescription: "Macmacaan Talyaani ah oo qaxwo leh.",
     badge: "Special"
   },
-
-
-  // DRINKS
-
   {
     id: 12,
     name: "Fresh Orange Juice",
@@ -249,7 +223,6 @@ const products = [
     somaliDescription: "Casiir liin macaan oo cusub.",
     badge: ""
   },
-
   {
     id: 13,
     name: "Strawberry Smoothie",
@@ -258,10 +231,9 @@ const products = [
     price: 5.50,
     image: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=700&q=80",
     description: "Fresh strawberry blended smoothie.",
-    somaliDescription: "Cabitaan strawberry cusub oo la shiiday.",
+    somaliDescription: "Cabitaan strawberry cusub.",
     badge: ""
   },
-
   {
     id: 14,
     name: "Cold Coffee",
@@ -273,16 +245,30 @@ const products = [
     somaliDescription: "Qaxwo qabow oo macaan.",
     badge: ""
   }
-
 ];
 
+/* 4. ARABIC PRODUCTS */
 
-/* =========================================
-   4. LANGUAGE TRANSLATIONS
-========================================= */
+const arabicProducts = {
+  1: ["بيتزا مارغريتا", "صلصة طماطم طازجة وجبن موزاريلا وريحان."],
+  2: ["بيتزا بيبروني", "بيبروني كلاسيكي مع جبن موزاريلا ذائب."],
+  3: ["بيتزا الدجاج بالباربكيو", "دجاج مشوي وصلصة باربكيو وجبن."],
+  4: ["بيتزا الأجبان الأربعة", "مزيج لذيذ من أربعة أنواع من الجبن الإيطالي."],
+  5: ["سباغيتي بولونيز", "سباغيتي مع صلصة الطماطم واللحم."],
+  6: ["باستا ألفريدو بالكريمة", "صلصة ألفريدو الكريمية مع جبن البارميزان."],
+  7: ["باستا بيني بالدجاج", "معكرونة بيني مع الدجاج المشوي."],
+  8: ["ساندويتش الدجاج", "خبز طازج مع الدجاج والخضروات."],
+  9: ["كلوب ساندويتش", "ساندويتش من ثلاث طبقات بمكونات طازجة."],
+  10: ["كيكة الشوكولاتة", "كيكة شوكولاتة غنية بطبقة كريمية."],
+  11: ["تيراميسو", "حلوى إيطالية كلاسيكية بنكهة القهوة."],
+  12: ["عصير البرتقال الطازج", "عصير برتقال طازج."],
+  13: ["سموذي الفراولة", "مشروب سموذي بالفراولة الطازجة."],
+  14: ["قهوة باردة", "قهوة مثلجة ناعمة ومنعشة."]
+};
+
+/* 5. TRANSLATIONS */
 
 const translations = {
-
   en: {
     orderNow: "ORDER NOW",
     question: "How would you like to enjoy your meal?",
@@ -291,8 +277,8 @@ const translations = {
     takeaway: "TAKEAWAY",
     dineDescription: "Enjoy your meal at our restaurant.",
     takeawayDescription: "Order your food and take it away.",
-    menu: "Menu",
     home: "Home",
+    menu: "Menu",
     about: "About",
     contact: "Contact",
     search: "Search your favorite food...",
@@ -324,7 +310,12 @@ const translations = {
     searchEmpty: "No food items found.",
     successCart: "Added to your cart!",
     orderReceived: "Order received",
-    selectPickup: "Select pickup time"
+    orderNotFound: "Order not found in this browser.",
+    emptyError: "Your cart is empty.",
+    addFirst: "Please add food to your cart first.",
+    allowPopup: "WhatsApp could not open. Please allow pop-ups.",
+    remove: "Remove item",
+    back: "Back"
   },
 
   so: {
@@ -335,8 +326,8 @@ const translations = {
     takeaway: "QAADO",
     dineDescription: "Cuntadaada ku cun maqaayaddeenna.",
     takeawayDescription: "Dalbo cuntadaada oo qaado.",
-    menu: "Cuntooyinka",
     home: "Bogga Hore",
+    menu: "Cuntooyinka",
     about: "Nagu Saabsan",
     contact: "Nala Soo Xiriir",
     search: "Raadi cuntada aad jeceshahay...",
@@ -368,126 +359,218 @@ const translations = {
     searchEmpty: "Wax cunto ah lama helin.",
     successCart: "Cuntada waa lagu daray gaariga!",
     orderReceived: "Dalabka waa la helay",
-    selectPickup: "Dooro waqtiga qaadashada"
-  }
+    orderNotFound: "Dalabkan lagama helin browser-kan.",
+    emptyError: "Gaarigaagu waa madhan yahay.",
+    addFirst: "Fadlan marka hore cunto ku dar gaariga.",
+    allowPopup: "WhatsApp ma furmin. Oggolow pop-ups.",
+    remove: "Ka saar cuntadan",
+    back: "Dib u noqo"
+  },
 
+  ar: {
+    orderNow: "اطلب الآن",
+    question: "كيف ترغب في الاستمتاع بوجبتك؟",
+    orderDescription: "اختر طريقة تناول الطعام المفضلة لديك.",
+    dineIn: "تناول الطعام في المطعم",
+    takeaway: "طلب خارجي",
+    dineDescription: "استمتع بوجبتك داخل مطعمنا.",
+    takeawayDescription: "اطلب طعامك وخذه معك.",
+    home: "الرئيسية",
+    menu: "قائمة الطعام",
+    about: "من نحن",
+    contact: "اتصل بنا",
+    search: "ابحث عن طعامك المفضل...",
+    all: "الكل",
+    pizza: "بيتزا",
+    pasta: "معكرونة",
+    sandwich: "ساندويتش",
+    dessert: "حلويات",
+    drinks: "مشروبات",
+    addCart: "أضف إلى السلة",
+    cart: "سلة التسوق",
+    emptyCart: "سلة التسوق فارغة",
+    emptyDescription: "أضف شيئاً لذيذاً!",
+    checkout: "إتمام الطلب",
+    total: "الإجمالي",
+    checkoutTitle: "إتمام الطلب",
+    customerInfo: "معلومات العميل",
+    fullName: "الاسم الكامل",
+    phone: "رقم الهاتف",
+    email: "البريد الإلكتروني",
+    table: "رقم الطاولة",
+    pickup: "وقت الاستلام",
+    notes: "ملاحظات الطلب",
+    placeOrder: "تأكيد الطلب",
+    thankYou: "شكراً لك!",
+    orderSuccess: "تم استلام طلبك بنجاح.",
+    track: "تتبع طلبك",
+    continue: "متابعة التسوق",
+    searchEmpty: "لم يتم العثور على أي أطعمة.",
+    successCart: "تمت إضافة الطعام إلى السلة!",
+    orderReceived: "تم استلام الطلب",
+    orderNotFound: "لم يتم العثور على الطلب في هذا المتصفح.",
+    emptyError: "سلة التسوق فارغة.",
+    addFirst: "يرجى إضافة الطعام إلى السلة أولاً.",
+    allowPopup: "يرجى السماح بالنوافذ المنبثقة لفتح واتساب.",
+    remove: "إزالة المنتج",
+    back: "رجوع"
+  }
 };
 
-
-/* =========================================
-   5. HELPER FUNCTIONS
-========================================= */
+/* 6. HELPER FUNCTIONS */
 
 function formatPrice(price) {
   return "$" + Number(price).toFixed(2);
 }
 
+function getText(key) {
+  return translations[currentLanguageCode]?.[key]
+    || translations.en[key]
+    || key;
+}
+
+function getProductName(product) {
+  if (currentLanguageCode === "so") {
+    return product.somaliName;
+  }
+
+  if (currentLanguageCode === "ar") {
+    return arabicProducts[product.id]?.[0] || product.name;
+  }
+
+  return product.name;
+}
+
+function getProductDescription(product) {
+  if (currentLanguageCode === "so") {
+    return product.somaliDescription;
+  }
+
+  if (currentLanguageCode === "ar") {
+    return arabicProducts[product.id]?.[1] || product.description;
+  }
+
+  return product.description;
+}
+
+function getCartTotal() {
+  return cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+}
 
 function showToast(message) {
-
   if (!toast || !toastMessage) return;
 
   clearTimeout(toastTimer);
 
   toastMessage.textContent = message;
-
   toast.classList.remove("hidden");
 
   toastTimer = setTimeout(() => {
     toast.classList.add("hidden");
   }, 3000);
-
 }
 
-
-function getText(key) {
-  return translations[currentLanguageCode][key] || key;
-}
-
-
-/* =========================================
-   6. WELCOME PAGE NAVIGATION
-========================================= */
-
-function showOrderTypePage() {
-
-  welcomePage.classList.add("hidden");
-
-  orderTypePage.classList.remove("hidden");
-
-  experiencePage.classList.add("hidden");
-
+function scrollTop() {
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
-
 }
 
+/* 7. GLOBAL PAGE NAVIGATION */
 
-function openRestaurant(orderType) {
+const allPages = {
+  welcomePage,
+  orderTypePage,
+  experiencePage,
+  checkoutPage,
+  confirmationPage,
+  trackPage
+};
 
-  selectedOrderType = orderType;
+function showPage(pageId, addHistory = true) {
+  if (!allPages[pageId]) return;
 
-  welcomePage.classList.add("hidden");
+  Object.entries(allPages).forEach(([id, page]) => {
+    page?.classList.toggle("hidden", id !== pageId);
+  });
 
-  orderTypePage.classList.add("hidden");
+  currentPage = pageId;
 
-  checkoutPage.classList.add("hidden");
-
-  confirmationPage.classList.add("hidden");
-
-  trackPage.classList.add("hidden");
-
-  experiencePage.classList.remove("hidden");
+  if (addHistory) {
+    if (pageHistory[pageHistory.length - 1] !== pageId) {
+      pageHistory.push(pageId);
+    }
+  }
 
   closeCart();
+  closeMobileMenu();
 
-  updateOrderFields();
+  if (globalBackBtn) {
+    globalBackBtn.style.display =
+      pageId === "welcomePage" ? "none" : "flex";
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+    globalBackBtn.setAttribute(
+      "aria-hidden",
+      String(pageId === "welcomePage")
+    );
+  }
 
+  scrollTop();
 }
 
+function goBack() {
+  if (cartDrawer && !cartDrawer.classList.contains("hidden")) {
+    closeCart();
+    return;
+  }
 
-orderNowBtn.addEventListener("click", showOrderTypePage);
+  if (languageOptions && !languageOptions.classList.contains("hidden")) {
+    languageOptions.classList.add("hidden");
+    return;
+  }
 
+  if (pageHistory.length > 1) {
+    pageHistory.pop();
 
-dineInBtn.addEventListener("click", () => {
-  openRestaurant("dine-in");
+    const previousPage = pageHistory[pageHistory.length - 1];
+
+    showPage(previousPage, false);
+  } else {
+    showPage("welcomePage", false);
+  }
+}
+
+globalBackBtn?.addEventListener("click", goBack);
+
+orderNowBtn?.addEventListener("click", () => {
+  showPage("orderTypePage");
 });
 
+backWelcomeBtn?.addEventListener("click", goBack);
 
-takeawayBtn.addEventListener("click", () => {
-  openRestaurant("takeaway");
+dineInBtn?.addEventListener("click", () => {
+  selectedOrderType = "dine-in";
+  updateOrderFields();
+  showPage("experiencePage");
 });
 
-
-backWelcomeBtn.addEventListener("click", () => {
-
-  orderTypePage.classList.add("hidden");
-
-  welcomePage.classList.remove("hidden");
-
-  window.scrollTo(0, 0);
-
+takeawayBtn?.addEventListener("click", () => {
+  selectedOrderType = "takeaway";
+  updateOrderFields();
+  showPage("experiencePage");
 });
 
-
-/* =========================================
-   7. SHOW CORRECT ORDER FIELDS
-========================================= */
+/* 8. ORDER TYPE FIELDS */
 
 function updateOrderFields() {
-
   const isDineIn = selectedOrderType === "dine-in";
 
-  dineInFields.classList.toggle("hidden", !isDineIn);
-
-  takeawayFields.classList.toggle("hidden", isDineIn);
+  dineInFields?.classList.toggle("hidden", !isDineIn);
+  takeawayFields?.classList.toggle("hidden", isDineIn);
 
   if (tableNumber) {
     tableNumber.required = isDineIn;
@@ -496,780 +579,735 @@ function updateOrderFields() {
   if (pickupTime) {
     pickupTime.required = !isDineIn;
   }
-
 }
 
-
-/* =========================================
-   8. DISPLAY PRODUCTS
-========================================= */
+/* 9. DISPLAY PRODUCTS */
 
 function displayProducts() {
-
   if (!productsGrid) return;
 
-  const searchText = menuSearch.value.toLowerCase().trim();
+  const searchText = (menuSearch?.value || "").toLowerCase().trim();
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = products.filter((product) => {
+    const searchable = [
+      product.name,
+      product.somaliName,
+      product.description,
+      product.somaliDescription,
+      ...(arabicProducts[product.id] || [])
+    ].join(" ").toLowerCase();
 
     const matchesCategory =
       currentCategory === "all" ||
       product.category === currentCategory;
 
-    const matchesSearch =
-      product.name.toLowerCase().includes(searchText) ||
-      product.somaliName.toLowerCase().includes(searchText) ||
-      product.description.toLowerCase().includes(searchText) ||
-      product.somaliDescription.toLowerCase().includes(searchText);
-
-    return matchesCategory && matchesSearch;
-
+    return matchesCategory && searchable.includes(searchText);
   });
-
 
   productsGrid.innerHTML = "";
 
-  if (filteredProducts.length === 0) {
+  if (!filteredProducts.length) {
+    noProducts?.classList.remove("hidden");
 
-    noProducts.classList.remove("hidden");
-
-    noProducts.textContent = getText("searchEmpty");
+    if (noProducts) {
+      noProducts.textContent = getText("searchEmpty");
+    }
 
     return;
-
   }
 
-  noProducts.classList.add("hidden");
+  noProducts?.classList.add("hidden");
 
+  filteredProducts.forEach((product) => {
+    const card = document.createElement("article");
+    card.className = "product-card";
 
-  filteredProducts.forEach(product => {
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "product-image-container";
 
-    const productName =
-      currentLanguageCode === "so"
-        ? product.somaliName
-        : product.name;
+    const image = document.createElement("img");
+    image.className = "product-image";
+    image.src = product.image;
+    image.alt = getProductName(product);
+    image.loading = "lazy";
 
-    const productDescription =
-      currentLanguageCode === "so"
-        ? product.somaliDescription
-        : product.description;
+    imageContainer.appendChild(image);
 
-    const productBadge = product.badge
-      ? `<span class="product-badge">${product.badge}</span>`
-      : "";
+    if (product.badge) {
+      const badge = document.createElement("span");
+      badge.className = "product-badge";
+      badge.textContent = product.badge;
+      imageContainer.appendChild(badge);
+    }
 
-    const productCard = document.createElement("article");
+    const content = document.createElement("div");
+    content.className = "product-content";
 
-    productCard.className = "product-card";
+    const heading = document.createElement("h3");
+    heading.textContent = getProductName(product);
 
-    productCard.innerHTML = `
+    const description = document.createElement("p");
+    description.textContent = getProductDescription(product);
 
-      <div class="product-image-container">
+    const bottom = document.createElement("div");
+    bottom.className = "product-bottom";
 
-        <img
-          class="product-image"
-          src="${product.image}"
-          alt="${productName}"
-          loading="lazy"
-        >
+    const price = document.createElement("span");
+    price.className = "product-price";
+    price.textContent = formatPrice(product.price);
 
-        ${productBadge}
+    const addButton = document.createElement("button");
+    addButton.type = "button";
+    addButton.className = "add-to-cart-btn";
+    addButton.dataset.productId = product.id;
+    addButton.innerHTML =
+      `<i class="fa-solid fa-cart-plus"></i> ${getText("addCart")}`;
 
-      </div>
+    bottom.append(price, addButton);
+    content.append(heading, description, bottom);
+    card.append(imageContainer, content);
 
-      <div class="product-content">
-
-        <h3>${productName}</h3>
-
-        <p>${productDescription}</p>
-
-        <div class="product-bottom">
-
-          <span class="product-price">
-            ${formatPrice(product.price)}
-          </span>
-
-          <button
-            type="button"
-            class="add-to-cart-btn"
-            data-product-id="${product.id}"
-          >
-
-            <i class="fa-solid fa-cart-plus"></i>
-
-            ${getText("addCart")}
-
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-    productsGrid.appendChild(productCard);
-
+    productsGrid.appendChild(card);
   });
-
 }
 
+menuSearch?.addEventListener("input", displayProducts);
 
-/* =========================================
-   9. SEARCH PRODUCTS
-========================================= */
+/* 10. CATEGORY FILTER */
 
-menuSearch.addEventListener("input", displayProducts);
+menuCategories?.addEventListener("click", (event) => {
+  const button = event.target.closest(".category-btn");
 
+  if (!button) return;
 
-/* =========================================
-   10. CATEGORY FILTER
-========================================= */
-
-menuCategories.addEventListener("click", (event) => {
-
-  const categoryButton = event.target.closest(".category-btn");
-
-  if (!categoryButton) return;
-
-  document.querySelectorAll(".category-btn").forEach(button => {
-    button.classList.remove("active");
+  document.querySelectorAll(".category-btn").forEach((item) => {
+    item.classList.remove("active");
   });
 
-  categoryButton.classList.add("active");
+  button.classList.add("active");
 
-  currentCategory = categoryButton.dataset.category;
+  currentCategory = button.dataset.category || "all";
 
   displayProducts();
-
 });
 
+/* 11. ADD TO CART */
 
-/* =========================================
-   11. ADD PRODUCT TO CART
-========================================= */
+productsGrid?.addEventListener("click", (event) => {
+  const button = event.target.closest(".add-to-cart-btn");
 
-productsGrid.addEventListener("click", (event) => {
+  if (!button) return;
 
-  const addButton = event.target.closest(".add-to-cart-btn");
-
-  if (!addButton) return;
-
-  const productId = Number(addButton.dataset.productId);
-
-  addToCart(productId);
-
+  addToCart(Number(button.dataset.productId));
 });
-
 
 function addToCart(productId) {
-
-  const product = products.find(item => item.id === productId);
+  const product = products.find((item) => item.id === productId);
 
   if (!product) return;
 
-  const existingItem = cart.find(item => item.id === productId);
+  const existingItem = cart.find((item) => item.id === productId);
 
   if (existingItem) {
-
     existingItem.quantity++;
-
   } else {
-
     cart.push({
       ...product,
       quantity: 1
     });
-
   }
 
   updateCart();
-
   showToast(getText("successCart"));
-
 }
 
-
-/* =========================================
-   12. UPDATE CART
-========================================= */
+/* 12. UPDATE CART */
 
 function updateCart() {
-
   if (!cartItems) return;
 
   cartItems.innerHTML = "";
 
   let totalQuantity = 0;
 
-  let totalPrice = 0;
-
-
-  if (cart.length === 0) {
-
-    cartItems.innerHTML = `
-
-      <div class="empty-cart" id="emptyCart">
-
-        <i class="fa-solid fa-basket-shopping"></i>
-
-        <h3>${getText("emptyCart")}</h3>
-
-        <p>${getText("emptyDescription")}</p>
-
-      </div>
-
-    `;
-
-  }
-
-
-  cart.forEach(item => {
-
+  cart.forEach((item) => {
     totalQuantity += item.quantity;
 
-    totalPrice += item.price * item.quantity;
-
-    const itemName =
-      currentLanguageCode === "so"
-        ? item.somaliName
-        : item.name;
-
     const cartItem = document.createElement("div");
-
     cartItem.className = "cart-item";
 
-    cartItem.innerHTML = `
+    const image = document.createElement("img");
+    image.src = item.image;
+    image.alt = getProductName(item);
 
-      <img src="${item.image}" alt="${itemName}">
+    const info = document.createElement("div");
+    info.className = "cart-item-info";
 
-      <div class="cart-item-info">
+    const heading = document.createElement("h4");
+    heading.textContent = getProductName(item);
 
-        <h4>${itemName}</h4>
+    const price = document.createElement("p");
+    price.textContent = formatPrice(item.price * item.quantity);
 
-        <p>${formatPrice(item.price * item.quantity)}</p>
+    const quantity = document.createElement("div");
+    quantity.className = "cart-quantity";
 
-        <div class="cart-quantity">
-
-          <button
-            type="button"
-            data-action="decrease"
-            data-id="${item.id}"
-            aria-label="Decrease quantity"
-          >
-            -
-          </button>
-
-          <span>${item.quantity}</span>
-
-          <button
-            type="button"
-            data-action="increase"
-            data-id="${item.id}"
-            aria-label="Increase quantity"
-          >
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-      <button
-        type="button"
-        class="remove-cart-item"
-        data-action="remove"
-        data-id="${item.id}"
-        aria-label="Remove item"
-      >
-
-        <i class="fa-solid fa-trash"></i>
-
-      </button>
-
+    quantity.innerHTML = `
+      <button type="button" data-action="decrease" data-id="${item.id}">-</button>
+      <span>${item.quantity}</span>
+      <button type="button" data-action="increase" data-id="${item.id}">+</button>
     `;
 
-    cartItems.appendChild(cartItem);
+    info.append(heading, price, quantity);
 
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "remove-cart-item";
+    removeButton.dataset.action = "remove";
+    removeButton.dataset.id = item.id;
+    removeButton.setAttribute("aria-label", getText("remove"));
+    removeButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+
+    cartItem.append(image, info, removeButton);
+    cartItems.appendChild(cartItem);
   });
 
+  if (cart.length === 0) {
+    cartItems.innerHTML = `
+      <div class="empty-cart">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h3>${getText("emptyCart")}</h3>
+        <p>${getText("emptyDescription")}</p>
+      </div>
+    `;
+  }
 
-  cartCount.textContent = totalQuantity;
+  if (cartCount) {
+    cartCount.textContent = totalQuantity;
+  }
 
-  cartTotal.textContent = formatPrice(totalPrice);
+  if (cartTotal) {
+    cartTotal.textContent = formatPrice(getCartTotal());
+  }
 
   if (checkoutTotal) {
-    checkoutTotal.textContent = formatPrice(totalPrice);
+    checkoutTotal.textContent = formatPrice(getCartTotal());
   }
 
   updateCheckoutSummary();
-
 }
 
+/* 13. CART QUANTITY BUTTONS */
 
-/* =========================================
-   13. CART QUANTITY CONTROLS
-========================================= */
-
-cartItems.addEventListener("click", (event) => {
-
+cartItems?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-action]");
 
   if (!button) return;
 
-  const productId = Number(button.dataset.id);
-
+  const id = Number(button.dataset.id);
   const action = button.dataset.action;
 
-  const item = cart.find(product => product.id === productId);
+  const item = cart.find((product) => product.id === id);
 
   if (!item) return;
 
-
   if (action === "increase") {
-
     item.quantity++;
-
   } else if (action === "decrease") {
-
     item.quantity--;
 
     if (item.quantity <= 0) {
-      cart = cart.filter(product => product.id !== productId);
+      cart = cart.filter((product) => product.id !== id);
     }
-
   } else if (action === "remove") {
-
-    cart = cart.filter(product => product.id !== productId);
-
+    cart = cart.filter((product) => product.id !== id);
   }
 
   updateCart();
-
 });
 
-
-/* =========================================
-   14. OPEN AND CLOSE CART
-========================================= */
+/* 14. CART DRAWER */
 
 function openCart() {
+  if (!cartDrawer || !cartOverlay) return;
 
   cartDrawer.classList.remove("hidden");
-
   cartOverlay.classList.remove("hidden");
 
   document.body.style.overflow = "hidden";
-
 }
-
 
 function closeCart() {
-
-  cartDrawer.classList.add("hidden");
-
-  cartOverlay.classList.add("hidden");
+  cartDrawer?.classList.add("hidden");
+  cartOverlay?.classList.add("hidden");
 
   document.body.style.overflow = "";
-
 }
 
+cartButton?.addEventListener("click", openCart);
+closeCartBtn?.addEventListener("click", closeCart);
+cartOverlay?.addEventListener("click", closeCart);
 
-cartButton.addEventListener("click", openCart);
-
-closeCartBtn.addEventListener("click", closeCart);
-
-cartOverlay.addEventListener("click", closeCart);
-
-
-/* =========================================
-   15. CHECKOUT SUMMARY
-========================================= */
+/* 15. CHECKOUT SUMMARY */
 
 function updateCheckoutSummary() {
-
   if (!checkoutItems) return;
 
   checkoutItems.innerHTML = "";
 
-  cart.forEach(item => {
+  cart.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "checkout-summary-item";
 
-    const itemName =
-      currentLanguageCode === "so"
-        ? item.somaliName
-        : item.name;
+    const name = document.createElement("span");
+    name.textContent = `${getProductName(item)} × ${item.quantity}`;
 
-    const summaryItem = document.createElement("div");
+    const price = document.createElement("span");
+    price.textContent = formatPrice(item.price * item.quantity);
 
-    summaryItem.className = "checkout-summary-item";
-
-    summaryItem.innerHTML = `
-
-      <span>${itemName} × ${item.quantity}</span>
-
-      <span>${formatPrice(item.price * item.quantity)}</span>
-
-    `;
-
-    checkoutItems.appendChild(summaryItem);
-
+    row.append(name, price);
+    checkoutItems.appendChild(row);
   });
 
-  const total = cart.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
+  if (checkoutTotal) {
+    checkoutTotal.textContent = formatPrice(getCartTotal());
+  }
 
-  checkoutTotal.textContent = formatPrice(total);
-
+  updatePlaceOrderButton();
 }
 
+/* 16. PAYMENT BUTTON TOTAL */
 
-/* =========================================
-   16. OPEN CHECKOUT PAGE
-========================================= */
+function updatePlaceOrderButton() {
+  const button = $("#placeOrderBtn");
 
-checkoutBtn.addEventListener("click", () => {
+  if (!button) return;
 
-  if (cart.length === 0) {
+  button.innerHTML = `
+    PAY ${formatPrice(getCartTotal())}
+    <i class="fa-solid fa-lock"></i>
+  `;
+}
 
-    showToast(
-      currentLanguageCode === "so"
-        ? "Fadlan marka hore cunto ku dar gaariga."
-        : "Please add food to your cart first."
-    );
+/* 17. OPEN CHECKOUT */
 
+checkoutBtn?.addEventListener("click", () => {
+  if (!cart.length) {
+    showToast(getText("addFirst"));
     return;
-
   }
 
   closeCart();
-
-  experiencePage.classList.add("hidden");
-
-  checkoutPage.classList.remove("hidden");
-
   updateOrderFields();
-
   updateCheckoutSummary();
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
+  showPage("checkoutPage");
 });
 
+/* 18. BACK TO MENU */
 
-/* =========================================
-   17. BACK TO MENU
-========================================= */
+backToMenuBtn?.addEventListener("click", goBack);
 
-backToMenuBtn.addEventListener("click", () => {
+/* 19. PAYMENT METHOD */
 
-  checkoutPage.classList.add("hidden");
+function getSelectedPaymentMethod() {
+  return document.querySelector(
+    'input[name="paymentMethod"]:checked'
+  )?.value || "";
+}
 
-  experiencePage.classList.remove("hidden");
+/* 20. ORDER STORAGE */
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+function getStoredOrders() {
+  try {
+    const orders = JSON.parse(
+      localStorage.getItem(STORAGE_ORDERS) || "[]"
+    );
 
-});
+    return Array.isArray(orders) ? orders : [];
+  } catch (error) {
+    console.error("Order storage error:", error);
+    return [];
+  }
+}
 
+function saveOrder(order) {
+  const orders = getStoredOrders();
 
-/* =========================================
-   18. PLACE ORDER
-========================================= */
+  orders.push(order);
 
-checkoutForm.addEventListener("submit", (event) => {
+  localStorage.setItem(
+    STORAGE_ORDERS,
+    JSON.stringify(orders)
+  );
 
+  localStorage.setItem(
+    STORAGE_LAST_ORDER,
+    JSON.stringify(order)
+  );
+}
+
+/* 21. WHATSAPP ORDER MESSAGE */
+
+function sendOrderToWhatsApp(order) {
+  const orderedItems = order.items.map((item, index) => {
+    return `${index + 1}. ${item.name}\n   Quantity: ${item.quantity}\n   Price: ${formatPrice(item.price * item.quantity)}`;
+  }).join("\n\n");
+
+  const orderDetails = order.orderType === "dine-in"
+    ? `Table Number: ${order.tableNumber}`
+    : `Pickup Time: ${order.pickupTime}`;
+
+  const message = `
+🍕 BELLA NAPOLI
+NEW CUSTOMER ORDER
+
+━━━━━━━━━━━━━━━━━━
+
+ORDER NUMBER:
+${order.number}
+
+CUSTOMER:
+${order.customer}
+
+PHONE:
+${order.phone}
+
+EMAIL:
+${order.email || "Not provided"}
+
+ORDER TYPE:
+${order.orderType}
+
+${orderDetails}
+
+━━━━━━━━━━━━━━━━━━
+
+ORDER ITEMS:
+
+${orderedItems}
+
+━━━━━━━━━━━━━━━━━━
+
+TOTAL:
+${formatPrice(order.total)}
+
+PAYMENT METHOD:
+${order.paymentMethod}
+
+NOTES:
+${order.notes || "No notes"}
+
+STATUS:
+${order.status}
+
+━━━━━━━━━━━━━━━━━━
+Bella Napoli Pizzeria & Restaurant
+`;
+
+  const whatsappURL =
+    "https://wa.me/" +
+    RESTAURANT_WHATSAPP +
+    "?text=" +
+    encodeURIComponent(message);
+
+  /*
+    Open WhatsApp directly.
+    Use the same tab if popup is blocked.
+  */
+
+  const whatsappWindow = window.open(
+    whatsappURL,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  if (!whatsappWindow) {
+    window.location.href = whatsappURL;
+  }
+}
+
+/* 22. PLACE ORDER */
+
+checkoutForm?.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  if (cart.length === 0) {
-
-    showToast("Your cart is empty.");
-
+  if (!cart.length) {
+    showToast(getText("emptyError"));
     return;
-
   }
 
   if (!checkoutForm.checkValidity()) {
-
     checkoutForm.reportValidity();
-
     return;
-
   }
 
+  const paymentMethod = getSelectedPaymentMethod();
 
-  const customerName = $("#customerName").value.trim();
+  if (!paymentMethod) {
+    showToast("Please select a payment method.");
+    return;
+  }
 
-  const customerPhone = $("#customerPhone").value.trim();
-
-  const customerEmail = $("#customerEmail").value.trim();
-
-  const notes = $("#orderNotes").value.trim();
-
-
-  const total = cart.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
-
+  const customerName = $("#customerName")?.value.trim() || "";
+  const customerPhone = $("#customerPhone")?.value.trim() || "";
+  const customerEmail = $("#customerEmail")?.value.trim() || "";
+  const notes = $("#orderNotes")?.value.trim() || "";
 
   const newOrderNumber =
     "BN" + Date.now().toString().slice(-8);
 
-
   lastOrder = {
-
     number: newOrderNumber,
-
     customer: customerName,
-
     phone: customerPhone,
-
     email: customerEmail,
 
     orderType: selectedOrderType,
 
     tableNumber: selectedOrderType === "dine-in"
-      ? tableNumber.value.trim()
+      ? tableNumber?.value.trim() || ""
       : "",
 
     pickupTime: selectedOrderType === "takeaway"
-      ? pickupTime.value
+      ? pickupTime?.value || ""
       : "",
 
-    notes: notes,
+    notes,
+    paymentMethod,
 
-    items: cart.map(item => ({
+    items: cart.map((item) => ({
       id: item.id,
       name: item.name,
       quantity: item.quantity,
       price: item.price
     })),
 
-    total: total,
-
+    total: getCartTotal(),
     status: "Order received",
-
     date: new Date().toISOString()
-
   };
 
-
-  // Save the latest order in the browser.
-  // This is a local demo, not a restaurant server.
+  /*
+    Open WhatsApp before doing other work,
+    so browsers are more likely to allow it.
+  */
 
   try {
-    localStorage.setItem(
-      "bellaNapoliLastOrder",
-      JSON.stringify(lastOrder)
-    );
+    saveOrder(lastOrder);
   } catch (error) {
-    console.warn("Could not save order in browser storage.", error);
+    console.error("Could not save order:", error);
+    showToast("Could not save order on this device.");
+    return;
   }
 
+  if (confirmationOrderNumber) {
+    confirmationOrderNumber.textContent =
+      "#" + newOrderNumber;
+  }
 
-  orderNumber.textContent = "#" + newOrderNumber;
-
-
-  checkoutPage.classList.add("hidden");
-
-  confirmationPage.classList.remove("hidden");
-
+  const orderToSend = lastOrder;
 
   cart = [];
-
   updateCart();
 
   checkoutForm.reset();
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  selectedOrderType = orderToSend.orderType;
 
+  showPage("confirmationPage");
+
+  sendOrderToWhatsApp(orderToSend);
 });
 
+/* 23. TRACK ORDER PAGE */
 
-/* =========================================
-   19. TRACK ORDER PAGE
-========================================= */
+trackOrderBtn?.addEventListener("click", () => {
+  trackResult?.classList.add("hidden");
 
-trackOrderBtn.addEventListener("click", () => {
-
-  confirmationPage.classList.add("hidden");
-
-  trackPage.classList.remove("hidden");
-
-  trackResult.classList.add("hidden");
-
-  if (lastOrder) {
+  if (lastOrder && trackOrderInput) {
     trackOrderInput.value = lastOrder.number;
   }
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  showPage("trackPage");
 
+  /*
+    Automatically show the latest order status.
+  */
+
+  if (lastOrder && trackForm) {
+    trackForm.requestSubmit();
+  }
 });
 
+/* 24. TRACK ORDER SEARCH */
 
-trackForm.addEventListener("submit", (event) => {
-
+trackForm?.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const enteredNumber = trackOrderInput.value.trim().toUpperCase();
+  const enteredNumber =
+    (trackOrderInput?.value || "").trim().toUpperCase();
 
+  if (!enteredNumber) return;
 
-  if (!lastOrder || enteredNumber !== lastOrder.number.toUpperCase()) {
+  const orders = getStoredOrders();
 
-    trackResult.classList.remove("hidden");
+  const foundOrder = orders.find((order) => {
+    return String(order.number).toUpperCase() === enteredNumber;
+  });
 
-    trackStatus.textContent =
-      currentLanguageCode === "so"
-        ? "Dalabkan lagama helin browser-kan."
-        : "Order not found in this browser.";
+  trackResult?.classList.remove("hidden");
 
-    trackStatus.style.color = "#dc3545";
+  if (!foundOrder) {
+    if (trackStatus) {
+      trackStatus.textContent = getText("orderNotFound");
+      trackStatus.style.color = "#dc3545";
+    }
 
     return;
-
   }
 
+  if (trackStatus) {
+    trackStatus.textContent =
+      `${foundOrder.status} - ${foundOrder.number}`;
 
-  trackResult.classList.remove("hidden");
-
-  trackStatus.textContent =
-    currentLanguageCode === "so"
-      ? "Dalabka waa la helay."
-      : lastOrder.status;
-
-  trackStatus.style.color = "#28a745";
-
+    trackStatus.style.color = "#28a745";
+  }
 });
 
+/* 25. CONTINUE SHOPPING */
 
-backFromTrackBtn.addEventListener("click", () => {
-
-  trackPage.classList.add("hidden");
-
-  experiencePage.classList.remove("hidden");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-});
-
-
-/* =========================================
-   20. CONTINUE SHOPPING
-========================================= */
-
-continueShoppingBtn.addEventListener("click", () => {
-
-  confirmationPage.classList.add("hidden");
-
-  welcomePage.classList.remove("hidden");
-
+continueShoppingBtn?.addEventListener("click", () => {
   selectedOrderType = "";
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
+  showPage("welcomePage");
 });
 
-
-/* =========================================
-   21. LANGUAGE SWITCHER
-========================================= */
+/* 26. LANGUAGE SWITCHER */
 
 function changeLanguage(language) {
-
   if (!translations[language]) return;
 
   currentLanguageCode = language;
 
-  currentLanguage.textContent =
-    language.toUpperCase();
+  const isArabic = language === "ar";
 
-  document.documentElement.lang =
-    language === "so" ? "so" : "en";
+  document.documentElement.lang = language;
+  document.documentElement.dir = isArabic ? "rtl" : "ltr";
 
+  if (currentLanguage) {
+    currentLanguage.textContent = language.toUpperCase();
+  }
 
-  // Translate elements with data-en and data-so.
+  document.querySelectorAll("[data-en], [data-so], [data-ar]")
+    .forEach((element) => {
+      const translated = element.dataset[language];
 
-  document.querySelectorAll("[data-en][data-so]").forEach(element => {
+      if (translated !== undefined) {
+        element.textContent = translated;
+      }
+    });
 
-    element.textContent =
-      element.dataset[language];
+  /* Order Now */
 
-  });
+  if (orderNowBtn) {
+    const icon = orderNowBtn.querySelector("i");
 
+    orderNowBtn.textContent = getText("orderNow") + " ";
 
-  // Translate buttons and navigation.
+    if (icon) {
+      orderNowBtn.appendChild(icon);
+    }
+  }
 
-  const navigationLinks = document.querySelectorAll(".nav-link");
+  /* Order Type */
+
+  const orderHeading = $("#orderTypePage h1");
+  const orderDescription = $("#orderTypePage .order-type-description");
+
+  if (orderHeading) {
+    orderHeading.textContent = getText("question");
+  }
+
+  if (orderDescription) {
+    orderDescription.textContent = getText("orderDescription");
+  }
+
+  const dineHeading = $("#dineInBtn h2");
+  const takeawayHeading = $("#takeawayBtn h2");
+
+  if (dineHeading) dineHeading.textContent = getText("dineIn");
+  if (takeawayHeading) takeawayHeading.textContent = getText("takeaway");
+
+  const dineDescription = $("#dineInBtn p");
+  const takeawayDescription = $("#takeawayBtn p");
+
+  if (dineDescription) {
+    dineDescription.textContent = getText("dineDescription");
+  }
+
+  if (takeawayDescription) {
+    takeawayDescription.textContent = getText("takeawayDescription");
+  }
+
+  /* Navigation */
 
   const navKeys = ["home", "menu", "about", "contact"];
 
-  navigationLinks.forEach((link, index) => {
-
+  document.querySelectorAll(".nav-link").forEach((link, index) => {
     if (navKeys[index]) {
       link.textContent = getText(navKeys[index]);
     }
-
   });
 
+  /* Search */
 
-  // Translate order type cards.
+  if (menuSearch) {
+    menuSearch.placeholder = getText("search");
+  }
 
-  $("#dineInBtn h2").textContent = getText("dineIn");
+  /* Categories */
 
-  $("#takeawayBtn h2").textContent = getText("takeaway");
-
-  $("#dineInBtn p").textContent = getText("dineDescription");
-
-  $("#takeawayBtn p").textContent = getText("takeawayDescription");
-
-
-  // Translate menu categories.
-
-  document.querySelectorAll(".category-btn").forEach(button => {
-
-    const category = button.dataset.category;
-
-    button.textContent = getText(category);
-
+  document.querySelectorAll(".category-btn").forEach((button) => {
+    button.textContent = getText(
+      button.dataset.category || "all"
+    );
   });
 
+  /* Cart */
 
-  // Translate search.
+  const cartHeading = $("#cartDrawer .cart-header h2");
 
-  menuSearch.placeholder = getText("search");
+  if (cartHeading) {
+    cartHeading.innerHTML =
+      `<i class="fa-solid fa-cart-shopping"></i> ${getText("cart")}`;
+  }
 
+  const cartTotalLabel = $("#cartDrawer .cart-total span");
 
-  // Translate checkout headings and labels.
+  if (cartTotalLabel) {
+    cartTotalLabel.textContent = getText("total");
+  }
 
-  const checkoutHeading = $(".checkout-heading h1");
+  if (checkoutBtn) {
+    checkoutBtn.innerHTML =
+      `${getText("checkout")} <i class="fa-solid fa-arrow-right"></i>`;
+  }
+
+  /* Checkout */
+
+  const checkoutHeading = $("#checkoutPage .checkout-heading h1");
 
   if (checkoutHeading) {
     checkoutHeading.textContent = getText("checkoutTitle");
   }
 
-  const checkoutSectionHeading = $(".checkout-form-section h2");
+  const customerHeading = $(".checkout-form-section h2");
 
-  if (checkoutSectionHeading) {
-    checkoutSectionHeading.textContent = getText("customerInfo");
+  if (customerHeading) {
+    customerHeading.textContent = getText("customerInfo");
   }
 
-  const customerLabels = {
+  const labelTranslations = {
     customerName: "fullName",
     customerPhone: "phone",
     customerEmail: "email",
@@ -1278,245 +1316,204 @@ function changeLanguage(language) {
     orderNotes: "notes"
   };
 
-  Object.entries(customerLabels).forEach(([id, key]) => {
-
-    const input = document.getElementById(id);
-
-    if (!input) return;
-
+  Object.entries(labelTranslations).forEach(([id, key]) => {
     const label = document.querySelector(`label[for="${id}"]`);
 
     if (label) {
       label.textContent = getText(key);
     }
-
   });
 
+  /* Confirmation */
 
-  // Translate checkout button.
+  const thankYou = $("#confirmationPage .confirmation-container h1");
 
-  const checkoutSubmit = $("#placeOrderBtn");
-
-  if (checkoutSubmit) {
-
-    checkoutSubmit.innerHTML = `
-      ${getText("placeOrder")}
-      <i class="fa-solid fa-check"></i>
-    `;
-
+  if (thankYou) {
+    thankYou.textContent = getText("thankYou");
   }
 
+  const successDescription = $("#confirmationPage .confirmation-container > p");
 
-  // Translate cart heading.
+  if (successDescription) {
+    successDescription.textContent = getText("orderSuccess");
+  }
 
-  $(".cart-header h2").innerHTML = `
-    <i class="fa-solid fa-cart-shopping"></i>
-    ${getText("cart")}
-  `;
+  if (trackOrderBtn) {
+    trackOrderBtn.textContent = getText("track");
+  }
 
+  if (continueShoppingBtn) {
+    continueShoppingBtn.textContent = getText("continue");
+  }
 
-  // Translate cart checkout button.
+  /* Global Back */
 
-  checkoutBtn.innerHTML = `
-    ${getText("checkout")}
-    <i class="fa-solid fa-arrow-right"></i>
-  `;
+  if (globalBackBtn) {
+    const backText = globalBackBtn.querySelector("span");
 
+    if (backText) {
+      backText.textContent = getText("back");
+    }
+  }
 
-  // Translate cart total label.
+  /* Language active state */
 
-  $(".cart-total span").textContent = getText("total");
+  languageOptions?.querySelectorAll("[data-lang]").forEach((button) => {
+    button.classList.toggle(
+      "active",
+      button.dataset.lang === language
+    );
 
-  $(".summary-total span").textContent = getText("total");
-
-
-  // Translate confirmation page.
-
-  $(".confirmation-container h1").textContent =
-    getText("thankYou");
-
-  $(".confirmation-container > p").textContent =
-    getText("orderSuccess");
-
-  trackOrderBtn.textContent = getText("track");
-
-  continueShoppingBtn.textContent = getText("continue");
-
-
-  // Refresh products and cart.
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.lang === language)
+    );
+  });
 
   displayProducts();
-
   updateCart();
+  updateCheckoutSummary();
 
-  languageOptions.classList.add("hidden");
-
-  languageBtn.setAttribute("aria-expanded", "false");
-
+  languageOptions?.classList.add("hidden");
+  languageBtn?.setAttribute("aria-expanded", "false");
 }
 
+languageBtn?.addEventListener("click", () => {
+  if (!languageOptions) return;
 
-languageBtn.addEventListener("click", () => {
-
-  const isOpening = languageOptions.classList.contains("hidden");
+  const opening = languageOptions.classList.contains("hidden");
 
   languageOptions.classList.toggle("hidden");
 
-  languageBtn.setAttribute(
-    "aria-expanded",
-    String(isOpening)
-  );
-
+  languageBtn.setAttribute("aria-expanded", String(opening));
 });
 
+languageOptions?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-lang]");
 
-languageOptions.addEventListener("click", (event) => {
+  if (!button) return;
 
-  const languageButton = event.target.closest("[data-lang]");
-
-  if (!languageButton) return;
-
-  changeLanguage(languageButton.dataset.lang);
-
+  changeLanguage(button.dataset.lang);
 });
 
+/* 27. MOBILE NAVIGATION */
 
-/* =========================================
-   22. MOBILE NAVIGATION
-========================================= */
+function closeMobileMenu() {
+  mainNavigation?.classList.remove("active");
 
-mobileMenuBtn.addEventListener("click", () => {
+  mobileMenuBtn?.setAttribute("aria-expanded", "false");
 
-  const isOpening = !mainNavigation.classList.contains("active");
+  if (mobileMenuBtn) {
+    mobileMenuBtn.innerHTML =
+      '<i class="fa-solid fa-bars"></i>';
+  }
+}
+
+mobileMenuBtn?.addEventListener("click", () => {
+  if (!mainNavigation) return;
+
+  const opening = !mainNavigation.classList.contains("active");
 
   mainNavigation.classList.toggle("active");
 
-  mobileMenuBtn.setAttribute(
-    "aria-expanded",
-    String(isOpening)
-  );
+  mobileMenuBtn.setAttribute("aria-expanded", String(opening));
 
-  mobileMenuBtn.innerHTML = isOpening
+  mobileMenuBtn.innerHTML = opening
     ? '<i class="fa-solid fa-xmark"></i>'
     : '<i class="fa-solid fa-bars"></i>';
-
 });
 
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", closeMobileMenu);
+});
 
-document.querySelectorAll(".nav-link").forEach(link => {
+/* 28. NAVIGATION HASH LINKS */
 
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", () => {
+    if (currentPage !== "experiencePage") return;
 
-    mainNavigation.classList.remove("active");
+    const targetId = link.getAttribute("href");
 
-    mobileMenuBtn.setAttribute("aria-expanded", "false");
+    if (targetId === "#") return;
 
-    mobileMenuBtn.innerHTML =
-      '<i class="fa-solid fa-bars"></i>';
+    const target = $(targetId);
 
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }, 50);
+    }
   });
-
 });
 
+/* 29. CLOSE DROPDOWNS */
 
-/* =========================================
-   23. UPDATE CURRENT YEAR
-========================================= */
+document.addEventListener("click", (event) => {
+  if (
+    languageOptions &&
+    languageBtn &&
+    !event.target.closest(".language-switcher")
+  ) {
+    languageOptions.classList.add("hidden");
+    languageBtn.setAttribute("aria-expanded", "false");
+  }
+});
 
-const currentYear = $("#currentYear");
+/* 30. ESCAPE KEY */
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeCart();
+
+    languageOptions?.classList.add("hidden");
+
+    languageBtn?.setAttribute("aria-expanded", "false");
+
+    closeMobileMenu();
+  }
+});
+
+/* 31. CURRENT YEAR */
 
 if (currentYear) {
   currentYear.textContent = new Date().getFullYear();
 }
 
+/* 32. RESTORE LAST ORDER */
 
-/* =========================================
-   24. CLOSE DROPDOWNS WHEN CLICKING OUTSIDE
-========================================= */
+function restoreLastOrder() {
+  try {
+    const savedOrder = localStorage.getItem(STORAGE_LAST_ORDER);
 
-document.addEventListener("click", (event) => {
-
-  if (
-    !event.target.closest(".language-switcher") &&
-    !languageOptions.classList.contains("hidden")
-  ) {
-
-    languageOptions.classList.add("hidden");
-
-    languageBtn.setAttribute("aria-expanded", "false");
-
+    if (savedOrder) {
+      lastOrder = JSON.parse(savedOrder);
+    }
+  } catch (error) {
+    console.error("Could not restore order:", error);
   }
+}
 
-});
-
-
-/* =========================================
-   25. ESCAPE KEY
-========================================= */
-
-document.addEventListener("keydown", (event) => {
-
-  if (event.key === "Escape") {
-
-    closeCart();
-
-    languageOptions.classList.add("hidden");
-
-    languageBtn.setAttribute("aria-expanded", "false");
-
-    mainNavigation.classList.remove("active");
-
-    mobileMenuBtn.setAttribute("aria-expanded", "false");
-
-    mobileMenuBtn.innerHTML =
-      '<i class="fa-solid fa-bars"></i>';
-
-  }
-
-});
-
-
-/* =========================================
-   26. INITIALIZE WEBSITE
-========================================= */
+/* 33. INITIALIZE WEBSITE */
 
 function initializeWebsite() {
-
-  // Show menu products.
+  restoreLastOrder();
 
   displayProducts();
-
-  // Initialize cart.
-
   updateCart();
-
-  // Set current year.
-
-  if (currentYear) {
-    currentYear.textContent = new Date().getFullYear();
-  }
-
-  // Set default language.
 
   changeLanguage("en");
 
-  // Make sure the welcome page appears first.
+  showPage("welcomePage", false);
 
-  welcomePage.classList.remove("hidden");
-
-  orderTypePage.classList.add("hidden");
-
-  experiencePage.classList.add("hidden");
-
-  checkoutPage.classList.add("hidden");
-
-  confirmationPage.classList.add("hidden");
-
-  trackPage.classList.add("hidden");
+  pageHistory = ["welcomePage"];
 
   console.log("Bella Napoli website is ready!");
-
 }
 
+/* START APPLICATION */
 
 initializeWebsite();
